@@ -19,6 +19,8 @@ runs:
     - name: Tag the repository
       id: tag
       run: |
+        git config --global user.email "abacchus@outlook.com"
+        git config --global user.name "Ahmad"
         git tag -a ${{ inputs.tag_name }} -m "${{ inputs.tag_message }}"
         git push origin ${{ inputs.tag_name }}
       shell: bash
