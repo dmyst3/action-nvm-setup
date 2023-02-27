@@ -1,1 +1,29 @@
+name: Tag Git
 
+description: Tags a Git repository with a specified tag name
+
+inputs:
+  tag_name:
+    description: 'The name of the tag to create'
+    required: true
+  tag_message:
+    description: 'The message to include with the tag'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Tag the repository
+      id: tag
+      run: |
+        git tag -a ${{ inputs.tag_name }} -m "${{ inputs.tag_message }}"
+        git push origin ${{ inputs.tag_name }}
+    - name: Get tag output
+      run: echo "Tagged with ${{ steps.tag.outputs.tag_name }}"
+
+outputs:
+  tag_name:
+    description: 'The name of the created tag'
+    value: ${{ inputs.tag_name }}
