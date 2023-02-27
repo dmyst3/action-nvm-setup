@@ -15,13 +15,17 @@ runs:
   steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      
     - name: Tag the repository
       id: tag
       run: |
         git tag -a ${{ inputs.tag_name }} -m "${{ inputs.tag_message }}"
         git push origin ${{ inputs.tag_name }}
+      shell: bash
+      
     - name: Get tag output
       run: echo "Tagged with ${{ steps.tag.outputs.tag_name }}"
+      shell: bash
 
 outputs:
   tag_name:
